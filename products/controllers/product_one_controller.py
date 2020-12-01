@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from products.services.product_service import insert_product
+from products.services.product_service import insert_product, get_product_by_id
 from flask_restful import Resource
 from products import app, api
 import json
@@ -13,6 +13,11 @@ import json
 '''
 
 class ProductOneIDController(Resource):
+    def get(self, _id):
+        product = get_product_by_id(_id)
+        product = json.loads(product.to_json())
+        return product, 200
+
     def post(self):
         data_json = {
             "name": request.form["name"],
