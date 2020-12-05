@@ -1,5 +1,5 @@
 from flask import request
-from products.services.product_service import insert_product, get_products_by_criteria
+from products.services.product_service import insert_product, get_products_by_criteria, get_products
 from flask_restful import Resource
 from products import app, api
 import json
@@ -13,18 +13,21 @@ import json
 }
 '''
 
+class ProductManyVariedController(Resource):
+    def get(self):
+        # quantidade é obrigatória.
+        params = dict(request.args)
+
+        products = get_products_by_criteria(**params)
+        products = json.loads(products.to_json())
+        
+        return products, 200
+
 class ProductManyController(Resource):
     def get(self):
-        params = {
-            "qtd": request.args["qtd"],
-            "category": request.args["category"],
-            "discount": request.args["discount"],
-        }
-
-        get_products_by_criteria(**params)       
-
+        products = json.loads(get_products().to_json())
         
-        return {"msg": "OK"}, 200
+        return products, 200
 
     def post(self):
         #import ipdb; ipdb.set_trace()
@@ -39,3 +42,4 @@ class ProductManyController(Resource):
         return {"_id": product_id}, 200
 
 api.add_resource(ProductManyController, "/products")
+api.add_resource(ProductManyVariedController, "/products_varied")
