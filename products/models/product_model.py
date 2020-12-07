@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Product(db.Document):
-    meta = {'collection': 'product'}
+    meta = {"collection": "product"}
     name = db.StringField(required=False)
     price = db.FloatField(required=False)
     discount_price = db.FloatField(required=False)
