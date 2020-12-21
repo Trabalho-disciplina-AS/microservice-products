@@ -9,6 +9,7 @@ RUN apk add --no-cache pcre
 WORKDIR /products
 COPY . /products
 RUN pip install -r /products/requirements.txt
+RUN pip install uwsgi
 RUN apk del .build-dependencies && rm -rf /var/cache/apk/*
 EXPOSE 5000
 CMD ["uwsgi", "--ini", "/products/wsgi.ini"]
