@@ -3,11 +3,13 @@ from products.services.product_service import (
     insert_product,
     get_products_by_criteria,
     get_products,
+    update_qtd_stock,
 )
 from flask_restful import Resource
 from products import app, api
 import json
-
+import requests
+import random
 
 """
 {
@@ -18,9 +20,15 @@ import json
 """
 
 
+class ProductManyStockController(Resource):
+    def post(self):
+        print(request.json["id"], int(request.json["qtd_stock"]))
+        update_qtd_stock(request.json["id"], int(request.json["qtd_stock"]))
+        return {"msg": "ok"}, 200
+
+
 class ProductManyController(Resource):
     def get(self):
-        # import ipdbipdb.set_trace()
         products = json.loads(get_products().to_json())
 
         return products, 200
@@ -44,6 +52,7 @@ class ProductManyVariedController(Resource):
 
         products = get_products_by_criteria(**params)
         products = json.loads(products.to_json())
+
         for product in products:
             product["_id"] = product["_id"]["$oid"]
             del product["created_at"]
@@ -51,5 +60,6 @@ class ProductManyVariedController(Resource):
         return products, 200
 
 
+api.add_resource(ProductManyStockController, "/products/qtd_stock")
 api.add_resource(ProductManyController, "/products")
 api.add_resource(ProductManyVariedController, "/products_varied")

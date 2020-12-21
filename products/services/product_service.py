@@ -25,6 +25,10 @@ def get_image_by_id(_id):
     return Product.objects(id=_id).first().image
 
 
+def update_qtd_stock(_id, qtd_stock):
+    return Product.objects(id=_id).update(set__qtd_stock=qtd_stock)
+
+
 def get_products_by_criteria(
     qtd=1, category={"$exists": True}, discount={"$exists": True}
 ):

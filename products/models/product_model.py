@@ -11,3 +11,4 @@ class Product(db.Document):
     category = db.StringField(max_length=50, required=False)
     image = db.FileField(required=False)
     created_at = db.DateTimeField(default=datetime.utcnow(), required=False)
+    qtd_stock = db.IntField(required=False)

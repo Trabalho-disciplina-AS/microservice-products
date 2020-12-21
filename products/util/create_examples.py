@@ -63,4 +63,4 @@ for product, image_file in zip(products, files):
         "http://localhost:5005/products", headers={}, data=product, files=image_file
     )
 
-    print(response.text)
+print(response.text)
