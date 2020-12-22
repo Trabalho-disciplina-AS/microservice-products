@@ -44,6 +44,12 @@ def insert_product(body: dict, image):
 
 def insert_product_admin(product):
     product = Product(**product)
-    product.image.put(product["image"], content_type="image/jpeg")
+    product.save()
+    return str(product.id)
+
+
+def insert_image_admin_by_id(_id, image):
+    product = Product.objects(id=_id).first()
+    product = product.image.put(image, content_type="image/jpeg")
     product.save()
     return str(product.id)

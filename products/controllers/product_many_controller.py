@@ -5,6 +5,7 @@ from products.services.product_service import (
     get_products,
     update_qtd_stock,
     insert_product_admin,
+    insert_image_admin_by_id,
 )
 from flask_restful import Resource
 from products import api
@@ -65,11 +66,13 @@ class ProductManyVariedController(Resource):
 
 class ProductAdminController(Resource):
     def post(self):
-        import ipdb
-
-        ipdb.set_trace()
-
         product_id = insert_product_admin(request.json)
+        return {"_id": product_id}, 200
+
+
+class ProductAdminImageController(Resource):
+    def post(self, _id):
+        product_id = insert_image_admin_by_id(_id, request.files["image"])
         return {"_id": product_id}, 200
 
 
@@ -77,3 +80,4 @@ api.add_resource(ProductManyStockController, "/products/qtd_stock")
 api.add_resource(ProductManyController, "/products")
 api.add_resource(ProductManyVariedController, "/products_varied")
 api.add_resource(ProductAdminController, "/products/admin")
+api.add_resource(ProductAdminImageController, "/products/admin/<_id>")
