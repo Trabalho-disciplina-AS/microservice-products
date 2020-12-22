@@ -6,6 +6,7 @@ from products.services.product_service import (
     update_qtd_stock,
     insert_product_admin,
     insert_image_admin_by_id,
+    delete_product_admin_by_id,
 )
 from flask_restful import Resource
 from products import api
@@ -75,6 +76,9 @@ class ProductAdminImageController(Resource):
         product_id = insert_image_admin_by_id(_id, request.files["image"])
         return {"_id": product_id}, 200
 
+    def delete(self, _id):
+        delete_product_admin_by_id(_id)
+        return {"msg": "ok"}, 200
 
 api.add_resource(ProductManyStockController, "/products/qtd_stock")
 api.add_resource(ProductManyController, "/products")

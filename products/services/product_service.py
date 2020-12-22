@@ -50,6 +50,12 @@ def insert_product_admin(product):
 
 def insert_image_admin_by_id(_id, image):
     product = Product.objects(id=_id).first()
-    product = product.image.put(image, content_type="image/jpeg")
+    product.image.replace(image, content_type="image/jpeg")
     product.save()
     return str(product.id)
+
+def delete_product_admin_by_id(_id):
+    try:
+        Product.objects(id=_id).first().delete()
+    except:
+        pass
