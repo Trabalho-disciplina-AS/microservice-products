@@ -40,3 +40,10 @@ def insert_product(body: dict, image):
     product.image.put(image, content_type="image/jpeg")
     product.save()
     return str(product.id)
+
+
+def insert_product_admin(product):
+    product = Product(**product)
+    product.image.put(product["image"], content_type="image/jpeg")
+    product.save()
+    return str(product.id)
