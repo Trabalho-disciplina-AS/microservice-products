@@ -8,6 +8,7 @@ RUN apk add --virtual .build-dependencies \
 RUN apk add --no-cache pcre
 WORKDIR /products
 COPY . /products
+RUN apk add ca-certificates
 RUN pip install -r /products/requirements.txt
 RUN pip install uwsgi
 RUN apk del .build-dependencies && rm -rf /var/cache/apk/*
